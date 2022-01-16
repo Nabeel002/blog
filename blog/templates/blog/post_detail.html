@@ -1,0 +1,90 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<header class="masthead" {% if post.post_image %} style="background-image: url('{{ post.post_image.url }}')" {% endif %}>
+  <div class="container position-relative px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+              <div class="post-heading">
+                  <h1>{{ post.title }}</h1>
+                  <h2 class="subheading">{{post.preview_field}}</h2>
+                  <span class="meta">
+                      Posted by
+                      <a href="#!">{{post.author}}</a>               
+{% if post.published_date %}
+{{ post.published_date }}
+{% else %}
+<a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-primary"> Publish</a>
+{% endif %}
+                  </span>
+              </div>
+          </div>
+      </div>
+  </div>
+</header>
+
+
+    <!-- Post Content-->
+    <article class="mb-4">
+      <div class="container px-4 px-lg-5">
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+              <div class="col-md-10 col-lg-8 col-xl-7">
+               
+           
+                    <p>
+                      {{ post.text|safe }}
+                       Edit Or Remove this post
+                      {% if user.is_authenticated %}
+  
+<a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">
+<span> <i class="fas fa-pencil-alt"></i></span>
+</a>
+<a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-primary">
+  <span> <i class="fas fa-minus-circle"></i></span>
+  </a>
+{% else %}
+{% endif %}
+                  </p>
+              </div>
+          </div>
+      </div>
+  </article>
+
+
+
+
+
+
+
+<hr>
+
+<a  class="btn btn-primary" href="{% url 'add_comment_to_post' pk=post.pk %}"> Add comment</a>
+
+<div class="container">
+{% for comment in post.comments.all  %}
+
+<br>
+{% if user.is_authenticated or comment.approved_comment %}
+{{comment.created_date}}
+
+{% if not comment.approved_comment %}
+<a href="{% url 'comment_approve' pk=comment.pk %}" class="btn btn-primary">
+<span><i class="far fa-plus-square"></i></span>
+</a>
+
+<a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-default">
+<span> <i class="fas fa-minus-circle"></i></span>
+</a>
+
+{% else %}
+{% endif %}
+
+ <p>{{comment.text|safe|linebreaksbr}}</p> 
+  <p>Posted By: {{comment.author}}</p> 
+{% else %}
+{% endif %}
+ {% empty %}
+ <p>No Comments</p>
+{% endfor %}
+</div>
+</div>
+{% endblock  %}

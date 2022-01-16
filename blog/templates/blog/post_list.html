@@ -1,0 +1,52 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+ <!-- Page Header-->
+ <header class="masthead" style="background-image:url('/static/image/home-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+{% for post in post_list %}
+   <!-- Main Content-->
+ 
+       
+            <!-- Post preview-->
+            <div class="post-preview">
+                <a href="{% url 'post_detail' pk=post.pk %}"">
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    {% if post.preview_field %}
+                    <h3 class="post-subtitle">{{post.preview_field|safe}}</h3>
+                    {% else %}
+                    <h3>No Content found</h3>
+                    {% endif %}
+                </a>
+                <p class="post-meta">
+                    Posted by
+                    <a href="#!">{{ post.author }}</a>
+                    Published On:{{post.published_date}}
+                    <a href=" {% url 'post_detail' pk=post.pk %}">
+                </p>
+         
+
+
+
+
+{% endfor %}
+            </div>
+            </div>
+</div>
+
+{% endblock  %}
