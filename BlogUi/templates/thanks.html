@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="thank-you">
+  Thank you for your submission!
+  <br />
+
+  <a href="{% url 'article' %}" style="color: red; text-decoration: underline"
+    >Go Back to the articles</a
+  >
+</div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+
+
+{% block content %}
+
+
+<style>
+     .form-container{
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        margin: auto;
+    }
+</style>
+  <div style="width: 500px; height: 200px;" class="form-container">
+    
+      <form action="" style="display: flex; flex-direction: column;"  method="POST">
+        {% csrf_token %}
+        
+        {{ form }}
+        <input class="btn blue darken-3" type="submit" style="margin-left: 0px;" value="submit">
+    </form>
+</div>
+{% endblock content %}

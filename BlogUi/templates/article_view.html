@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<style>
+    .input{
+        padding: 10px !important;
+border: 0 !important;
+border-radius: 10px !important;
+background: #f7f7f7 !important;
+border-radius: 0px !important;
+outline: none !important;
+margin-top: 1rem !important;
+    }
+
+
+    .input:focus{
+  outline-style: none !important;    }
+
+    ::placeholder { 
+  color: rgb(81, 79, 79);
+  opacity: 1; 
+}
+
+:-ms-input-placeholder { 
+  color: rgb(81, 79, 79);
+}
+
+::-ms-input-placeholder {
+  color: rgb(81, 79, 79);
+}
+</style>
+<div class="container">
+
+    <h5 class="blog-title">{{ posts.title  }}</h5>
+
+    {{ posts.body|safe  }}
+        
+
+   
+   {% if user.is_authenticated %}
+
+     <div class="fixed-action-btn" style="right:150px;">
+        <a class="btn-floating btn-large red" href="{% url 'update' pk=posts.pk %}">
+            <i class="large material-icons">create</i>
+        </a>
+   
+    </div>
+   {% endif %}
+
+    
+<div >
+<h5>Comments</h5>
+    <div class="field has-addons" >
+
+        <div class="control" >
+            <form action="" method="POST" style="display: flex; flex-direction: column;">
+                {% csrf_token %}
+                                 <p>  {% render_field form.name class+="input" placeholder="Name" %}</p>
+
+                   <p> {% render_field form.comment class+="input"  %}</p>
+        </div>
+
+            <button style="margin-left: 35px;" class="btn " >
+                Post
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="comments">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+        
+        {% for com in comments  %}
+            
+            
+        <div class="card-panel grey lighten-5 z-depth-1">
+            <div class="row">
+                <div class="col s1">
+                    <img src="https://loremflickr.com/50/50?random={{ forloop.counter0 }}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                </div>
+                 <div class="col s2">
+                    <span class="black-text">
+                        <b>{{com.name }}</b>
+                    </span>
+                </div>
+                <div class="col s11">
+                    <span class="black-text">
+                        {{com.comment}}
+                    </span>
+                </div>
+                <a href="{% url 'delete' pk=com.pk %}">Delete</a>
+            </div>
+        </div>
+       {% endfor %}
+
+    </div>
+</div>
+</div>
+
+{% endblock content %}
+    

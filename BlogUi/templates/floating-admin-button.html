@@ -1,0 +1,41 @@
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</head>
+
+
+<body>
+    
+    <div class="fixed-action-btn" id="floating">
+        <a class="btn-floating btn-large red" href="{% url 'create' %}">
+            <i class="large material-icons">perm_identity</i>
+            {{ ip }}
+
+        </a>
+    </div>
+
+
+</script>
+
+<script>
+
+   
+    $.getJSON("https://api.ipify.org?format=json", function (data) {
+
+console.log(data.ip)    
+
+if (data.ip==="45.248.66.141" || data.ip==="110.224.117.250") {
+    document.getElementById("floating").style.display="block"
+    console.log(data.ip)
+    
+}
+
+
+})
+</script>
+</body>

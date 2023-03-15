@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="font-size: 1.5rem; text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+Search Results</div>
+<div class="card-parent">
+    {% for object in blog_list %}
+    <a href="{% url 'post' pk=object.pk %}" style="color:black;">
+        <div class="card">
+            <div class="image-wrapper">
+                {% if object.preview_image %}
+                <img class="image-max-cover" src="{{ object.preview_image.url }}" alt="">
+                {% else %}
+                <img class="image-max-cover" src="https://picsum.photos/500/500
+" alt="">
+
+                {% endif %}
+            </div>
+            <div class="content-wrapper">
+                {{ object.title }} </div>
+        </div>
+    </a>
+    {% empty %}
+    <li>No Articles Yet</li>
+    {% endfor %}
+</div>
+
+{% endblock content %}

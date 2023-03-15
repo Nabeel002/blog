@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<style>
+    select {
+        display: block;
+    }
+
+    .overlay{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: rgba(255,255,255,0.8) url("loader.gif") center no-repeat;
+}
+/* Turn off scrollbar when body element has the loading class */
+body.loading{
+    overflow: hidden;   
+}
+/* Make spinner image visible when body element has the loading class */
+body.loading .overlay{
+    display: block;
+}
+</style>
+<div class="row">
+
+    <div class="col s3">
+
+        <div class="container">
+            <h6 class="is-text-gray">Hello {{ user.username }}</h6>
+            <div>
+                <ul class="tabs" style="display: flex; flex-direction: column; height: 243px;">
+                    <li class="tab" style="display: flex; align-items: center; justify-content: center;"><a
+                            href="#test1"
+                            style="text-align: left; padding: 0px; color: black; text-transform: capitalize; display: flex; align-items: center;"><span
+                                class="material-symbols-outlined" style="margin-right: 10px;">
+                                edit
+                            </span>
+                            Write An Article</a></li>
+                    <li class="tab"><a href="#test2"
+                            style="text-align: left; padding: 0px; color: black; text-transform: capitalize; display: flex; align-items: center; "><span
+                                class="material-symbols-outlined" style="margin-right: 10px;">
+                                psychology
+                            </span>Let The Ai Do It</a></li>
+
+                    <a href="http://127.0.0.1:8000/accounts/logout/"
+                        style="text-align: left; padding: 0px; color: black; text-transform: capitalize; display: flex; align-items: center; ">
+                        <span class="material-symbols-outlined" style="margin-right: 10px;">
+                            subdirectory_arrow_left
+                        </span>Logout</a>
+
+<li class="tab" style="display: flex; align-items: center; justify-content: center;"><a href="#test3"
+        style="text-align: left; padding: 0px; color: black; text-transform: capitalize; display: flex; align-items: center;"><span
+            class="material-symbols-outlined" style="margin-right: 10px;">
+            account_circle
+
+        </span>
+    Contacts</a></li>
+                       
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s9">
+        {% if messages %}
+        {% if form.non_field_errors %}
+        <div class="form-group text-error">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} id="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div id="test1" class="col s12">
+            <div style="display: flex;">
+
+                <form method="POST" enctype="multipart/form-data"
+                    style="display: flex; flex-direction: column; justify-content: center; flex-grow: 0;">
+
+                    {% csrf_token %}
+                    <label for="">Title</label>
+                    {% render_field form.title class+="input-field" placeholder="Blog Title" %}
+                    <div style="margin-top: 2rem; margin-bottom: 2rem;">
+                        <label for="">A preview field to show on the homepage</label>
+
+
+                        {% render_field form.preview_image %}
+                    </div>
+
+                    {{ form.media }}
+
+                    {% render_field form.body %}
+
+
+
+                    {% render_field form.Author|attr:"placeholder:bar" %}
+
+                    <input class="button" type="submit" value="Submit">
+                </form>
+
+            </div>
+        </div>
+        <div id="test2" class="col s12">
+            <p>Play Around with our Ai Blog Writer</p>
+
+            <form id="task-form" action="" method="post">
+                {% csrf_token %}
+                {{ promptform.as_p }}
+
+
+                <input style="width: 200px;" class="btn " id="task" type="submit" value="submit">
+            </form>
+                            {{resp}}
+
+
+
+        </div>
+<div id="test3" class="col s12 container" >
+    
+<ul class="collapsible">
+    
+    {% for r in reach  %}
+        
+    
+    <li>
+        <div class="collapsible-header"><i class="material-icons">account_circle</i>{{ r.email }}   </div>
+        <div class="collapsible-body"><span>{{ r.req }}</span></div>
+    </li>
+    {% endfor %}
+   
+</ul></div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.tabs').tabs();
+    });
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+    });
+           
+    
+    
+    
+
+
+       
+</script>
+
+
+
+
+{% endblock content %}

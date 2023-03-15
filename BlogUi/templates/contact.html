@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+<div>
+<div style="width: 416px; height: 200px;" class="form-container">
+
+  <form action="" method="POST">
+    <div style="display: flex; flex-direction: column;">
+{% csrf_token %}
+        {{ form.as_p }}
+        <input style="margin-left: 0px; " class="btn btn blue darken-3" type="submit" value="Submit">
+    </div>
+
+
+  </form>
+</div>
+</div>
+{% endblock content %}
