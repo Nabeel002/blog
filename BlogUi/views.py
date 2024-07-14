@@ -10,10 +10,9 @@ import config
 import os
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from django.conf import settings
 
-
-# Create your views here.
-openai.api_key = "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"
+openai.api_key = settings.OPENAI_API_KEY
 
 class Index(View):
     def get(self,request,*args, **kwargs):
